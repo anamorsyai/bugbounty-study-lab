@@ -50,6 +50,8 @@ One lesson per bug class, each following the same structure so the knowledge com
 | 04 | [OAuth Redirect-URI Bypass](study/04-OAuth-redirect-bypass.md) | OAuth / account takeover | Meta — **$24,000** |
 | 05 | [Race Conditions](study/05-Race-Conditions.md) | Concurrency / logic | Stripe — **$5,000** |
 | 06 | [XSS → Account Takeover](study/06-XSS.md) | Client-side | PayPal — **$20,000** |
+| 07 | [Web Cache Poisoning & Deception](study/07-Cache-Poisoning-Deception.md) | Caching | PayPal — **$18,900** |
+| 08 | [HTTP Request Smuggling](study/08-Request-Smuggling.md) | Infrastructure | Basecamp — **$7,500** |
 
 [`study/INDEX.md`](study/INDEX.md) tracks progress and holds the cross-lesson threads
 (the principles that recur across classes).
