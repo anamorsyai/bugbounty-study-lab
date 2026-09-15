@@ -6,37 +6,64 @@
 > CVE-2024-52289 (authentik), GitLab HackerOne #1613430 / #1725190, Meta `datr` chain ($24,000)
 > **Format:** writeup → mechanism → raw traffic → bypasses → escalation → practice
 > **Status:** Lesson 4 of the study track
+> **Category:** 4. Identity & Auth — see [CURRICULUM](CURRICULUM.md#4-identity--auth)
 
 ---
 
-## 1. Why OAuth is the highest-paying web class
+## 1. The one-line definition
+
+**`redirect_uri` tells the authorization server where to send the token. If you can make that
+point at yourself, the victim's token becomes yours.**
 
 OAuth doesn't leak *some* data. It leaks **the credential that represents the user** — a token
 with the victim's full scope. One token = one account takeover, silently, with no password
 needed and often no consent screen shown.
-
-The two highest-paying cases in our study corpus are both OAuth:
-- **Meta `datr` cookie chain — $24,000** (Youssef Sammouda, Jan 2025): extracted Meta's device
-  identifier via crafted Graph API batch requests, **no user click required**, then used it to
-  trigger trusted-device account recovery and bypass secondary verification.
-- **The `@` symbol 1-click ATO** (below) — a single character bypassing a strict allowlist.
 
 **The recurring insight:** OAuth bugs are rarely in the crypto. They're in **URL parsing
 disagreements** — where the server and the browser disagree about what a URL *means*.
 
 ---
 
-## 2. The one-line definition
+## 2. Real money from real OAuth reports
 
-**`redirect_uri` tells the authorization server where to send the token. If you can make that
-point at yourself, the victim's token becomes yours.**
+| Report | Program | Bounty | The bug |
+|---|---|---|---|
+| — | **Meta** | **$24,000** | `datr` device-identifier cookie extracted via **Graph API batch requests**, no user click; then trusted-device account recovery + secondary-verification bypass (Youssef Sammouda, Jan 2025) |
+| — | (1-click ATO writeup) | — | **`@` userinfo bypass** of a strict allowlist → token via `postMessage` → full ATO (§4 below) |
+| [#1613430](https://hackerone.com/reports/1613430) | GitLab | Disclosed | OAuth redirect weakness |
+| [#1725190](https://hackerone.com/reports/1725190) | GitLab | Disclosed | OAuth redirect weakness |
+| [CVE-2024-52289](https://securityblog.omegapoint.se/en/writeup-authentik-cve-2024-52289/) | authentik | — | Insecure redirect URI validation → **account takeover** |
+| — | — | — | GitHub App scoped tokens → **$20,000** (see [Lesson 02 §3](02-GraphQL-BOLA.md)) — the token-scope cousin of this class |
+
+**Two properties make OAuth the highest-paying web class:**
+
+1. **The prize is a credential, not data.** You don't get one record — you get the identity.
+2. **The bug is a parsing disagreement, not a broken check.** The server *has* a check. It uses
+   the wrong method (string match) instead of the right one (parse, then compare).
+
+**Study the academic work too — it's unusually good for this class:**
+Innocenti et al. *"OAuth 2.0 Redirect URI Validation Falls Short, Literally"* (ACSAC 2023),
+Wang et al. *"Make Redirection Evil Again — URL Parser Issues in OAuth"* (Black Hat Asia 2019),
+and RFC 9700 (OAuth 2.0 Security BCP, Mar 2025) — deviations from it are findings.
+
+---
+
+## 3. Why OAuth out-pays almost everything else
+
+The two highest-paying cases in our study corpus are both OAuth:
+- **Meta `datr` cookie chain — $24,000** (Youssef Sammouda, Jan 2025): extracted Meta's device
+  identifier via crafted Graph API batch requests, **no user click required**, then used it to
+  trigger trusted-device account recovery and bypass secondary verification.
+- **The `@` symbol 1-click ATO** (§4 below) — a single character bypassing a strict allowlist.
+
+Compare the effort: one character. Compare the payout: full account takeover, silently.
 
 Every OAuth implementation must validate this parameter. Mature ones use a strict allowlist.
 This lesson is about how those allowlists break.
 
 ---
 
-## 3. The `@` bypass — the whole story
+## 4. The `@` bypass — the whole story
 
 ### The setup
 
@@ -174,7 +201,7 @@ Post-patch, the researcher retested **48 bypass variants** — all rejected. Sol
 
 ---
 
-## 4. The bypass taxonomy (root-cause organised)
+## 5. The bypass taxonomy (root-cause organised)
 
 The reason the `@` trick worked generalises. These are the root causes, not a payload dump:
 
@@ -223,7 +250,7 @@ and re-check after every redirect.
 
 ---
 
-## 5. Adjacent OAuth bugs worth hunting
+## 6. Adjacent OAuth bugs worth hunting
 
 | Class | The bug | Why it pays |
 |---|---|---|
@@ -246,7 +273,7 @@ GitLab HackerOne [#1613430](https://hackerone.com/reports/1613430) and
 
 ---
 
-## 6. The `postMessage` hunting technique — underused
+## 7. The `postMessage` hunting technique — underused
 
 Most hunters stop at "does `redirect_uri` bounce me off-domain?" **The `@` bug had no redirect
 at all.** So add this to your method:
@@ -262,7 +289,7 @@ at all.** So add this to your method:
 
 ---
 
-## 7. How to test — methodology
+## 8. How to test — methodology
 
 ```
 01. Map every OAuth flow: authorization endpoint, client_id, redirect_uri, response_type,
@@ -292,7 +319,7 @@ at all.** So add this to your method:
 
 ---
 
-## 8. Common mistakes
+## 9. Common mistakes
 
 - **Giving up after N rejected payloads.** The `@` bug was the **41st** attempt. Validation
   testing is combinatorial — persist.
@@ -307,7 +334,7 @@ at all.** So add this to your method:
 
 ---
 
-## 9. Practice targets
+## 10. Practice targets
 
 | Target | Why |
 |---|---|
@@ -325,7 +352,7 @@ halves of the lesson hands-on.
 
 ---
 
-## 10. Key takeaways
+## 11. Key takeaways
 
 1. **OAuth bugs are URL-parsing disagreements**, not crypto failures. String matching is the bug.
 2. **The `@` userinfo trick is ancient and still ships.** Add it to every test suite.
@@ -339,7 +366,7 @@ halves of the lesson hands-on.
 
 ---
 
-## 11. What to study next
+## 12. What to study next
 
 | You learned | Study next |
 |---|---|
@@ -351,7 +378,7 @@ halves of the lesson hands-on.
 
 ---
 
-## 12. Reference index
+## 13. Reference index
 
 | # | Source | Bounty | What it teaches |
 |---|---|---|---|

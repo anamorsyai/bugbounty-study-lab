@@ -5,6 +5,7 @@
 > `blog.cyberxplore.com/ssrf-cloud-metadata-account-takeover`, Resecurity SSRF-to-AWS analysis
 > **Format:** writeup → mechanism → raw traffic → bypasses → escalation → practice
 > **Status:** Lesson 3 of the study track
+> **Category:** 3. Server-Side Request — see [CURRICULUM](CURRICULUM.md#3-server-side-request)
 
 ---
 
@@ -22,21 +23,7 @@ CWE-918. OWASP A10. And the throughline: **SSRF is rarely the whole exploit — 
 
 ---
 
-## 2. Why `169.254.169.254` specifically
-
-`169.254.0.0/16` is the **link-local** range (RFC 3927). It is **not routable off the local
-segment** — which is exactly why cloud providers picked it. Every VM can reach its own metadata
-without that traffic ever touching a real network.
-
-Convenient for the platform. Also a perfect target: a **fixed, well-known address** that responds
-with **no authentication** beyond, sometimes, a header.
-
-What it hands out: instance config, **user-data scripts** (teams love stuffing secrets into
-those), and most importantly — **the credentials of the IAM role attached to the instance.**
-
----
-
-## 3. Real money from real SSRF reports
+## 2. Real money from real SSRF reports
 
 | Report | Program | Bounty | The bug |
 |---|---|---|---|
@@ -54,6 +41,20 @@ RSS/sitemap importers, headless-Chrome screenshot services, document/SVG process
 > **The recurring reality:** "the server made an outbound call it shouldn't have" quietly becomes
 > "the server gave us its cloud identity." A read-only image proxy turned into a foothold that
 > read S3 buckets and enumerated other roles.
+
+---
+
+## 3. Why `169.254.169.254` specifically
+
+`169.254.0.0/16` is the **link-local** range (RFC 3927). It is **not routable off the local
+segment** — which is exactly why cloud providers picked it. Every VM can reach its own metadata
+without that traffic ever touching a real network.
+
+Convenient for the platform. Also a perfect target: a **fixed, well-known address** that responds
+with **no authentication** beyond, sometimes, a header.
+
+What it hands out: instance config, **user-data scripts** (teams love stuffing secrets into
+those), and most importantly — **the credentials of the IAM role attached to the instance.**
 
 ---
 

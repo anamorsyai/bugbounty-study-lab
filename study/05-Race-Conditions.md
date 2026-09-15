@@ -5,6 +5,7 @@
 > James Kettle's *"The single-packet attack"*, PortSwigger Web Security Academy labs
 > **Format:** writeup → mechanism → raw traffic → bypasses → escalation → practice
 > **Status:** Lesson 5 of the study track
+> **Category:** 5. Business Logic — see [CURRICULUM](CURRICULUM.md#5-business-logic)
 
 ---
 

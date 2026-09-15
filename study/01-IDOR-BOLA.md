@@ -5,6 +5,7 @@
 > #3154983, #2374730, #1626508, #2122671, #415081, #2207248, #1658418)
 > **Format:** writeup → mechanism → raw traffic → bypasses → escalation → practice
 > **Status:** Lesson 1 of the study track
+> **Category:** 1. Access Control — see [CURRICULUM](CURRICULUM.md#1-access-control)
 
 ---
 
@@ -15,6 +16,10 @@
 OWASP ranks this #1 in the API Security Top 10 (API1). It is the single most-paid web bug
 class that requires **zero tooling** — only a second account and the discipline to change
 one number.
+
+---
+
+## 2. Real money from real IDOR reports
 
 Reality check from 250 real disclosures:
 
@@ -33,7 +38,7 @@ Reading profile #2 pays ~$1k. Deleting anyone's account pays $6k–$20k.
 
 ---
 
-## 2. The canonical pattern — raw traffic
+## 3. The canonical pattern — raw traffic
 
 The whole vulnerability in six lines:
 
@@ -55,7 +60,7 @@ asked *"is user 1235 yours?"* That missing question is the entire bug.
 
 ---
 
-## 3. Real writeups, dissected
+## 4. Real writeups, dissected
 
 ### 3.1 Nextcloud OOO / BOLA — HackerOne #3382343 (Dec 2025)
 
@@ -155,7 +160,7 @@ impact they missed, push back with evidence.
 
 ---
 
-## 4. Where IDOR actually hides — the surface map
+## 5. Where IDOR actually hides — the surface map
 
 Ranked by how often real disclosures used them:
 
@@ -193,7 +198,7 @@ hex (`0x4D2` → `1234`), GraphQL global node IDs (`node(id:"<base64>")`), UUIDs
 
 ---
 
-## 5. Bypasses when the obvious increment fails
+## 6. Bypasses when the obvious increment fails
 
 1. **Second, forgotten path to the same object** — `/api/users/{id}/orders` may lack the check
    that `/api/users/{id}` has. Always probe alternative routes and sub-resources.
@@ -213,7 +218,7 @@ rate limiting, UUIDs alone, input validation, HTTPS, client-side checks.
 
 ---
 
-## 6. Escalation — turning $500 into $20,000
+## 7. Escalation — turning $500 into $20,000
 
 The 6-phase kill chain:
 
@@ -235,7 +240,7 @@ The 6-phase kill chain:
 
 ---
 
-## 7. How to test — step by step (applies to any target)
+## 8. How to test — step by step (applies to any target)
 
 ```
 1. Create TWO accounts (A = attacker, B = victim). Never test IDOR with one account.
@@ -256,7 +261,7 @@ claims — ever.
 
 ---
 
-## 8. Common mistakes (what NOT to do)
+## 9. Common mistakes (what NOT to do)
 
 - **Testing with one account.** You cannot prove IDOR without a second identity. This is the #1
   reason reports get closed as "expected behaviour".
@@ -271,7 +276,7 @@ claims — ever.
 
 ---
 
-## 9. Practice targets (where to find this legally)
+## 10. Practice targets (where to find this legally)
 
 | Target type | Why |
 |---|---|
@@ -287,7 +292,7 @@ reading into reflex.
 
 ---
 
-## 10. Key takeaways
+## 11. Key takeaways
 
 1. **Authenticate ≠ authorize.** The server knowing who you are says nothing about whether
    the object is yours.
@@ -300,7 +305,7 @@ reading into reflex.
 
 ---
 
-## 11. What to study next
+## 12. What to study next
 
 | You learned | Study next |
 |---|---|
@@ -312,7 +317,7 @@ reading into reflex.
 
 ---
 
-## 12. Reference index — every report cited
+## 13. Reference index — every report cited
 
 | # | Report | Bounty | Class | Core technique |
 |---|---|---|---|---|

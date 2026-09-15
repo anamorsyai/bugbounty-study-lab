@@ -39,32 +39,32 @@ for it. Bounty figures are the disclosed amounts.
 | 2 | Create **two accounts** on one target. Never test IDOR with one identity | — |
 | 3 | Map every endpoint carrying an object ID — path, query, body, header | — |
 | 4 | Replay account A's request with B's object ID. Change **one** thing per request | [Nextcloud #3382343](https://hackerone.com/reports/3382343) |
-| 5 | Learn the ID-parameter cheat-sheet (`user_id`, `order_id`, `org_id`, `tenant_id`…) | Lesson 01 §4 |
-| 6 | Decode non-sequential IDs: base64, hex, UUID, GraphQL global node IDs | Lesson 01 §4 |
+| 5 | Learn the ID-parameter cheat-sheet (`user_id`, `order_id`, `org_id`, `tenant_id`…) | Lesson 01 §5 |
+| 6 | Decode non-sequential IDs: base64, hex, UUID, GraphQL global node IDs | Lesson 01 §5 |
 | 7 | Test **write** verbs — PUT/PATCH/DELETE. Reads pay Medium, writes pay Critical | [HackerOne #2122671](https://hackerone.com/reports/2122671) $12,500 |
-| 8 | Find the **second route** to the same object (`/users/{id}` vs `/users/{id}/invoices`) | Lesson 01 §5 |
-| 9 | Test **nested objects** — authorized parent, unauthorized child | Lesson 02 §3 |
+| 8 | Find the **second route** to the same object (`/users/{id}` vs `/users/{id}/invoices`) | Lesson 01 §6 |
+| 9 | Test **nested objects** — authorized parent, unauthorized child | Lesson 02 §4 |
 | 10 | Test **import/export** pipelines — IDs hidden inside files | [GitLab #743953](https://hackerone.com/reports/743953) $20,000 |
 | 11 | Test **bulk operations** — any endpoint taking an array of IDs | — |
-| 12 | Test old API versions (`/v1` vs `/v2`) — fixes often miss the old path | Lesson 01 §4 |
+| 12 | Test old API versions (`/v1` vs `/v2`) — fixes often miss the old path | Lesson 01 §5 |
 | 13 | Reverse a mobile APK; hunt **zombie endpoints** that lag on authz | [Bykea #3085742](https://hackerone.com/reports/3085742) |
 | 14 | Test **cross-tenant** — swap `org_id`/`tenant_id` across two orgs you own | [TikTok #984965](https://hackerone.com/reports/984965) |
 | 15 | Test **session misbinding** — your token, someone else's object in the body | [Mozilla #3154983](https://hackerone.com/reports/3154983) $6,000 |
-| 16 | Test **BFLA** — call admin functions as a normal user | Lesson 02 §3 |
+| 16 | Test **BFLA** — call admin functions as a normal user | Lesson 02 §4 |
 | 17 | Test **deactivated / logged-out** accounts — replay after revocation | [GitLab #1192460](https://hackerone.com/reports/1192460) $1,370 |
-| 18 | Test **method swap** — GET blocked, POST/PUT unguarded | Lesson 01 §5 |
-| 19 | Test **parameter pollution** — `?id=A&id=B`, `{"id":[A,B]}` | Lesson 01 §5 |
-| 20 | Check for **client-side-only** enforcement — the UI hides it, the API answers | Lesson 01 §5 |
+| 18 | Test **method swap** — GET blocked, POST/PUT unguarded | Lesson 01 §6 |
+| 19 | Test **parameter pollution** — `?id=A&id=B`, `{"id":[A,B]}` | Lesson 01 §6 |
+| 20 | Check for **client-side-only** enforcement — the UI hides it, the API answers | Lesson 01 §6 |
 | 21 | Test **role boundaries** — every role against every endpoint | — |
 | 22 | Test **mass assignment** — add `role`, `isAdmin`, `verified` to a profile update | — |
-| 23 | Map **what the UI never calls** — undocumented endpoints are unaudited | Lesson 02 §6 |
-| 24 | Chain IDOR with a role check gap → privilege escalation | Lesson 01 §6 |
-| 25 | Prove **blast radius** — how many objects, how fast, sequential or not | Lesson 01 §6 |
-| 26 | Learn what does **NOT** fix IDOR: rate limits, UUIDs, HTTPS, client checks | Lesson 01 §5 |
-| 27 | Build a reusable ID-swap script for your arsenal | Lesson 01 §7 |
-| 28 | Write the report: request as A + response showing B's data + B's own request | Lesson 01 §7 |
-| 29 | Re-read every disclosed IDOR on your target's program page | Lesson 01 §12 |
-| 30 | **Live rep:** run the full 10-step methodology on one real in-scope target | Lesson 01 §7 |
+| 23 | Map **what the UI never calls** — undocumented endpoints are unaudited | Lesson 02 §7 |
+| 24 | Chain IDOR with a role check gap → privilege escalation | Lesson 01 §7 |
+| 25 | Prove **blast radius** — how many objects, how fast, sequential or not | Lesson 01 §7 |
+| 26 | Learn what does **NOT** fix IDOR: rate limits, UUIDs, HTTPS, client checks | Lesson 01 §6 |
+| 27 | Build a reusable ID-swap script for your arsenal | Lesson 01 §8 |
+| 28 | Write the report: request as A + response showing B's data + B's own request | Lesson 01 §8 |
+| 29 | Re-read every disclosed IDOR on your target's program page | Lesson 01 §13 |
+| 30 | **Live rep:** run the full 10-step methodology on one real in-scope target | Lesson 01 §8 |
 
 ---
 
@@ -74,24 +74,24 @@ for it. Bounty figures are the disclosed amounts.
 
 | # | Step | Source |
 |---|---|---|
-| 1 | Find the API: `/api`, `/v1`, `/graphql`, `/rest`, JS bundles, mobile traffic | Lesson 02 §5 |
+| 1 | Find the API: `/api`, `/v1`, `/graphql`, `/rest`, JS bundles, mobile traffic | Lesson 02 §6 |
 | 2 | Locate API docs: Swagger/OpenAPI, `/docs`, `/redoc`, Postman collections | — |
 | 3 | Pull the full endpoint list from the docs — that's your test plan | — |
 | 4 | Learn GraphQL fundamentals: query vs mutation, resolver, schema | Lesson 02 §1 |
-| 5 | Fingerprint the GraphQL engine (`graphw00f`) | Lesson 02 §5 |
-| 6 | Dump the schema via introspection | Lesson 02 §6 |
-| 7 | If introspection is off, rebuild it with **clairvoyance** from field suggestions | Lesson 02 §7 |
-| 8 | Read the schema as a target list: sensitive fields, admin types, **unused mutations** | Lesson 02 §6 |
+| 5 | Fingerprint the GraphQL engine (`graphw00f`) | Lesson 02 §6 |
+| 6 | Dump the schema via introspection | Lesson 02 §7 |
+| 7 | If introspection is off, rebuild it with **clairvoyance** from field suggestions | Lesson 02 §8 |
+| 8 | Read the schema as a target list: sensitive fields, admin types, **unused mutations** | Lesson 02 §7 |
 | 9 | Test **resolver-level BOLA** on queries | [Shopify #2207248](https://hackerone.com/reports/2207248) $5,000 |
 | 10 | Test BOLA on **mutations** — less guarded than queries | [Snapchat #1819832](https://hackerone.com/reports/1819832) $15,000 |
-| 11 | Test **nested-object BOLA** | Lesson 02 §3 |
+| 11 | Test **nested-object BOLA** | Lesson 02 §4 |
 | 12 | Test **token-scope confusion** — a scoped token invoking a write | [GitHub #1711938](https://hackerone.com/reports/1711938) $20,000 |
-| 13 | Learn the **alias attack** — 10,000 operations in one HTTP request | Lesson 02 §4 |
-| 14 | Learn **batching** — array of operations for mass probing | Lesson 02 §4 |
+| 13 | Learn the **alias attack** — 10,000 operations in one HTTP request | Lesson 02 §5 |
+| 14 | Learn **batching** — array of operations for mass probing | Lesson 02 §5 |
 | 15 | Attack the **cost model** — negative-cost queries | [Shopify #481518](https://hackerone.com/reports/481518) |
-| 16 | Test **argument injection** in GraphQL args (SQL/NoSQL/operator) | Lesson 02 §8 |
-| 17 | Test **CSRF over GET** — queries/mutations accepted via GET or form-POST | Lesson 02 §8 |
-| 18 | Check for **verbose errors**, Apollo tracing, debug modes | Lesson 02 §8 |
+| 16 | Test **argument injection** in GraphQL args (SQL/NoSQL/operator) | Lesson 02 §9 |
+| 17 | Test **CSRF over GET** — queries/mutations accepted via GET or form-POST | Lesson 02 §9 |
+| 18 | Check for **verbose errors**, Apollo tracing, debug modes | Lesson 02 §9 |
 | 19 | Test **REST verb tampering** — OPTIONS, TRACE, arbitrary methods | — |
 | 20 | Test **content-type confusion** — JSON vs form vs XML on the same endpoint | — |
 | 21 | Test **mass assignment** on every create/update endpoint | — |
@@ -99,11 +99,11 @@ for it. Bounty figures are the disclosed amounts.
 | 23 | Test **pagination/lookup** for enumeration (`?limit=99999`, cursor tampering) | — |
 | 24 | Test **rate-limit gaps** on API endpoints vs the UI | — |
 | 25 | Test **WebSocket** endpoints — auth on connect vs per-message | — |
-| 26 | Compare **mobile API vs web API** — divergent authz | Lesson 01 §4 |
+| 26 | Compare **mobile API vs web API** — divergent authz | Lesson 01 §5 |
 | 27 | Test **GraphQL subscriptions** for authz gaps | — |
-| 28 | Build a schema→requests generator in your arsenal (or learn InQL) | Lesson 02 §6 |
-| 29 | Learn to write a GraphQL BOLA report with a resolver-level explanation | Lesson 02 §10 |
-| 30 | **Live rep:** full 14-step GraphQL checklist on a lab (DVGA) then a live target | Lesson 02 §10 |
+| 28 | Build a schema→requests generator in your arsenal (or learn InQL) | Lesson 02 §7 |
+| 29 | Learn to write a GraphQL BOLA report with a resolver-level explanation | Lesson 02 §11 |
+| 30 | **Live rep:** full 14-step GraphQL checklist on a lab (DVGA) then a live target | Lesson 02 §11 |
 
 ---
 
@@ -135,9 +135,9 @@ for it. Bounty figures are the disclosed amounts.
 | 20 | Test traversal in **non-obvious** places: file names, ZIP entries, log paths | — |
 | 21 | Test **log poisoning** → traversal → RCE | — |
 | 22 | Learn the difference: **open redirect** vs **SSRF** vs **path traversal** | — |
-| 23 | Hunt open redirects on every allowlisted domain you find | Lesson 04 §4 |
+| 23 | Hunt open redirects on every allowlisted domain you find | Lesson 04 §5 |
 | 24 | Test redirect params: `next`, `url`, `redirect`, `return`, `continue`, `dest` | — |
-| 25 | Test open-redirect **bypasses**: `//evil.com`, `https:/evil.com`, `\/\/`, `@` | Lesson 04 §4 |
+| 25 | Test open-redirect **bypasses**: `//evil.com`, `https:/evil.com`, `\/\/`, `@` | Lesson 04 §5 |
 | 26 | Learn why SSRF severity is set by the **IAM role**, not the web bug | Lesson 03 §10 |
 | 27 | Test SSRF in **GraphQL resolvers** (URL arguments) | [EXNESS #1864188](https://hackerone.com/reports/1864188) $3,000 |
 | 28 | Test SSRF in **PDF/image renderers** — they follow `<img>`, `<iframe>`, CSS `url()` | Lesson 03 §3 |
@@ -153,23 +153,23 @@ for it. Bounty figures are the disclosed amounts.
 | # | Step | Source |
 |---|---|---|
 | 1 | Learn the OAuth flows: authorization code, implicit, client credentials, PKCE | Lesson 04 §1 |
-| 2 | Map a full legitimate flow; note every parameter and its format | Lesson 04 §7 |
+| 2 | Map a full legitimate flow; note every parameter and its format | Lesson 04 §8 |
 | 3 | Understand `redirect_uri` — it tells the server where to send the token | Lesson 04 §2 |
-| 4 | Test redirect_uri validation: suffix, prefix, subdomain tricks | Lesson 04 §4 |
-| 5 | **The `@` userinfo bypass** — RFC 3986, host is what follows `@` | Lesson 04 §3 |
-| 6 | Test encoding layers: `%40`, `%2f`, `%252e`, unicode look-alikes | Lesson 04 §4 |
-| 7 | Test path confusion: `../`, fragments, backslashes | Lesson 04 §4 |
-| 8 | Test parameter pollution: two `redirect_uri` values | Lesson 04 §4 |
-| 9 | Test wildcard/prefix regex abuse in the allowlist | Lesson 04 §4 |
-| 10 | Chain an **open redirect on an allowlisted domain** | Lesson 04 §4 |
-| 11 | Test **`state`**: omit it, replay it, use one from another session | Lesson 04 §5 |
-| 12 | Test **scope escalation** — request broader scopes than the client should have | Lesson 04 §5 |
-| 13 | Test **PKCE downgrade** — remove `code_challenge`, plain vs S256 | Lesson 04 §5 |
-| 14 | Learn **`postMessage` target-origin** parsing (server vs browser disagreement) | Lesson 04 §6 |
-| 15 | Test silent flows (`mode=hidden`) — they remove the consent screen | Lesson 04 §3 |
-| 16 | Test **first-party client_ids** — broader scopes, less scrutiny | Lesson 04 §8 |
-| 17 | Test **pre-account-takeover** — register the victim's email first | Lesson 04 §5 |
-| 18 | Test **account linking without verification** | Lesson 04 §5 |
+| 4 | Test redirect_uri validation: suffix, prefix, subdomain tricks | Lesson 04 §5 |
+| 5 | **The `@` userinfo bypass** — RFC 3986, host is what follows `@` | Lesson 04 §4 |
+| 6 | Test encoding layers: `%40`, `%2f`, `%252e`, unicode look-alikes | Lesson 04 §5 |
+| 7 | Test path confusion: `../`, fragments, backslashes | Lesson 04 §5 |
+| 8 | Test parameter pollution: two `redirect_uri` values | Lesson 04 §5 |
+| 9 | Test wildcard/prefix regex abuse in the allowlist | Lesson 04 §5 |
+| 10 | Chain an **open redirect on an allowlisted domain** | Lesson 04 §5 |
+| 11 | Test **`state`**: omit it, replay it, use one from another session | Lesson 04 §6 |
+| 12 | Test **scope escalation** — request broader scopes than the client should have | Lesson 04 §6 |
+| 13 | Test **PKCE downgrade** — remove `code_challenge`, plain vs S256 | Lesson 04 §6 |
+| 14 | Learn **`postMessage` target-origin** parsing (server vs browser disagreement) | Lesson 04 §7 |
+| 15 | Test silent flows (`mode=hidden`) — they remove the consent screen | Lesson 04 §4 |
+| 16 | Test **first-party client_ids** — broader scopes, less scrutiny | Lesson 04 §9 |
+| 17 | Test **pre-account-takeover** — register the victim's email first | Lesson 04 §6 |
+| 18 | Test **account linking without verification** | Lesson 04 §6 |
 | 19 | Learn JWT structure: header.payload.signature, base64url | — |
 | 20 | Test **`alg:none`** — strip the signature entirely | — |
 | 21 | Test **algorithm confusion** — RS256 → HS256 using the public key as the secret | — |
@@ -178,10 +178,10 @@ for it. Bounty figures are the disclosed amounts.
 | 24 | Test **claim tampering** — `role`, `isAdmin`, `sub`, `exp`, `aud` | — |
 | 25 | Test JWT **revocation gaps** — does logout actually invalidate the token? | [HackerOne #417382](https://hackerone.com/reports/417382) $500 |
 | 26 | Test **SAML** — XSW (XML signature wrapping), comment injection, audience confusion | — |
-| 27 | Test **OTP/2FA** — brute force via GraphQL aliases (Lesson 02 §4) | — |
+| 27 | Test **OTP/2FA** — brute force via GraphQL aliases (Lesson 02 §5) | — |
 | 28 | Test **password reset** — token entropy, host-header poisoning, response leakage | — |
 | 29 | Test **session fixation** and cookie attribute gaps (`HttpOnly`, `Secure`, `SameSite`) | — |
-| 30 | **Live rep:** stand up Keycloak/authentik, walk the full §4 taxonomy, build a postMessage SPA | Lesson 04 §9 |
+| 30 | **Live rep:** stand up Keycloak/authentik, walk the full §4 taxonomy, build a postMessage SPA | Lesson 04 §10 |
 
 ---
 
@@ -367,7 +367,7 @@ for it. Bounty figures are the disclosed amounts.
 | 24 | Test **presigned URL** abuse — scope, expiry, replay | — |
 | 25 | Test **direct object storage** access (S3/GCS bucket listing) | — |
 | 26 | Test **content-disposition** injection | — |
-| 27 | Test **download** endpoints for authz (IDOR on files) | Lesson 01 §4 |
+| 27 | Test **download** endpoints for authz (IDOR on files) | Lesson 01 §5 |
 | 28 | Test **temp file** leakage | — |
 | 29 | Test **source map** and backup file exposure (`.map`, `.bak`, `.git`) | — |
 | 30 | **Live rep:** upload an SVG that executes, and a polyglot that passes both checks | — |

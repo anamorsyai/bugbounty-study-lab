@@ -5,10 +5,22 @@
 > `burakdirlik.dev/posts/graphql-vulnerabilities`
 > **Format:** writeup → mechanism → raw traffic → bypasses → escalation → practice
 > **Status:** Lesson 2 of the study track
+> **Category:** 2. API & Protocol — see [CURRICULUM](CURRICULUM.md#2-api--protocol)
 
 ---
 
-## 1. Why GraphQL is a different game
+## 1. The one-line definition
+
+**GraphQL BOLA = the gateway authenticates the session, but each *resolver* is supposed to
+re-check authorization for the field it returns — and developers forget them individually.**
+
+That's the whole bug class. In REST, access control sits at the route. In GraphQL there is no
+route — there's a resolver per field. A scanner that crawls URLs sees one endpoint and moves on.
+**The real surface is the schema behind it.**
+
+---
+
+## 2. Why GraphQL is a different game
 
 REST spreads its attack surface across dozens of routes you have to *discover*.
 GraphQL funnels everything through **one endpoint** that will **describe itself** if you ask.
@@ -21,14 +33,12 @@ Three properties change how you test:
 | **Client-controlled shape** | You choose fields, nesting, and *how many operations* go in one request |
 | **Per-field authorization** | Authz must be re-checked inside **every resolver**. One missed field = a real bug |
 
-That last row is the whole lesson. In REST, access control usually sits at the route. In
-GraphQL there is no route — there's a resolver per field, and **developers forget them
-individually.** A scanner that crawls URLs sees one endpoint and moves on. The real surface is
-the schema behind it.
+That last row is the whole lesson — a scanner that crawls URLs sees one endpoint and moves on.
+The real surface is the schema behind it.
 
 ---
 
-## 2. Real money from real GraphQL reports
+## 3. Real money from real GraphQL reports
 
 From 65 disclosed HackerOne GraphQL reports — the paid ones:
 
@@ -63,7 +73,7 @@ programs treat "you can see the schema" as informational. **Authz and write oper
 
 ---
 
-## 3. The canonical attack — resolver-level BOLA
+## 4. The canonical attack — resolver-level BOLA
 
 ```
 query {
@@ -111,7 +121,7 @@ appears repeatedly in the disclosed corpus and is invisible to endpoint-level te
 
 ---
 
-## 4. Alias & batch attacks — the GraphQL-specific multiplier
+## 5. Alias & batch attacks — the GraphQL-specific multiplier
 
 ### Aliases: one HTTP request, 10,000 operations
 
@@ -146,7 +156,7 @@ responses. This is how you measure blast radius without tripping a throttle.
 
 ---
 
-## 5. Step 1 — find and fingerprint the endpoint
+## 6. Finding and fingerprinting the endpoint
 
 Common paths: `/graphql`, `/graphql/console`, `/graphiql`, `/api/graphql`, `/v1/graphql`,
 `/query`, `/gql`
@@ -169,7 +179,7 @@ python3 -m graphw00f -f -t https://target.tld/graphql
 
 ---
 
-## 6. Step 2 — dump the schema
+## 7. Dumping the schema with introspection
 
 Confirm introspection is on:
 
@@ -194,7 +204,7 @@ into:
 
 ---
 
-## 7. Step 3 — introspection off? Rebuild the schema anyway
+## 8. Introspection off? Rebuild the schema anyway
 
 Disabled introspection is a speed bump, not a wall. If **field suggestions** are on, the server
 corrects your typos and leaks field names one guess at a time:
@@ -217,7 +227,7 @@ clairvoyance https://target.tld/graphql -o schema.json -w wordlist.txt
 
 ---
 
-## 8. Bypasses & extra surfaces
+## 9. Bypasses & extra surfaces
 
 | Technique | Payload / approach |
 |---|---|
@@ -240,7 +250,7 @@ description plus a small PoC, not an outage.
 
 ---
 
-## 9. Escalation — what separates $0 from $20,000
+## 10. Escalation — what separates $0 from $20,000
 
 Reading the corpus, the escalation levers are clear:
 
@@ -258,7 +268,7 @@ with them. Authz and writes are the money.
 
 ---
 
-## 10. How to test — the checklist
+## 11. How to test — the checklist
 
 ```
 01. Locate endpoint (paths, JS bundles, mobile traffic) + fingerprint engine (graphw00f)
@@ -286,7 +296,7 @@ graphql-cop -t https://target.tld/graphql --header '{"Authorization": "Bearer <t
 
 ---
 
-## 11. Common mistakes
+## 12. Common mistakes
 
 - **Leading with introspection.** It's a $0 finding in practice. Note it, don't headline it.
 - **Testing only queries.** Mutations are the money and the most-forgotten authz.
@@ -299,7 +309,7 @@ graphql-cop -t https://target.tld/graphql --header '{"Authorization": "Bearer <t
 
 ---
 
-## 12. Practice targets
+## 13. Practice targets
 
 | Target | Why |
 |---|---|
@@ -315,7 +325,7 @@ the muscle. Next lesson builds on it.
 
 ---
 
-## 13. Key takeaways
+## 14. Key takeaways
 
 1. **One endpoint, many resolvers.** Authz is per-field, and developers forget fields.
 2. **Mutations > queries.** Write bugs pay 2–10× read bugs.
@@ -327,7 +337,7 @@ the muscle. Next lesson builds on it.
 
 ---
 
-## 14. What to study next
+## 15. What to study next
 
 | You learned | Study next |
 |---|---|
@@ -339,7 +349,7 @@ the muscle. Next lesson builds on it.
 
 ---
 
-## 15. Reference index
+## 16. Reference index
 
 | # | Report | Bounty | Class |
 |---|---|---|---|

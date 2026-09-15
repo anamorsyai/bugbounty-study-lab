@@ -13,22 +13,51 @@ escalation → practice assignment.
 | 05 | [Race Conditions](05-Race-Conditions.md) | Concurrency / logic | Stripe $5,000 | **done** |
 | 06 | [XSS → Account Takeover](06-XSS.md) | Client-side | PayPal $20,000 | **done** |
 
-**Curriculum:** [`../CURRICULUM.md`](../CURRICULUM.md) — 10 categories, **30 steps each**, organized
+**Curriculum:** [`../CURRICULUM.md`](CURRICULUM.md) — 10 categories, **30 steps each**, organized
 for daily learning. Start there for the full path; the lessons below go deep on one class each.
 
 ## Format contract for every lesson
 
-1. One-line definition + real payout statistics
-2. Canonical raw HTTP traffic (the whole bug in six lines)
-3. Real writeups dissected — endpoint, request, impact, *why it was findable*
-4. Surface map — where this class actually hides (ranked by real disclosure frequency)
-5. Bypasses when the obvious test fails
-6. Escalation ladder — how the same bug goes from $500 to $20,000
-7. Step-by-step test methodology
-8. Common mistakes
-9. Practice targets + a concrete assignment
-10. Key takeaways + "study next" ladder
-11. Reference index — every source URL cited
+All lessons follow the same shape. Sections 1–2 and the final six are **fixed**; the middle
+sections vary by class (mechanism, real cases, surface map, bypasses, escalation).
+
+**Fixed head**
+
+1. **The one-line definition** — the whole bug in one sentence
+2. **Real money from real `<class>` reports** — a table of disclosed reports with URLs and bounties
+
+**Middle — varies by class**
+
+3. Mechanism / why the class exists / how the target actually breaks
+4. Canonical raw HTTP traffic (the bug in a few lines)
+5. Real writeups dissected — endpoint, request, impact, *why it was findable*
+6. Surface map — where the class hides, ranked by real disclosure frequency
+7. Bypasses when the obvious test fails
+8. Escalation ladder — how the same bug goes from $500 to $20,000
+
+**Fixed tail**
+
+- **How to test — methodology** — a numbered checklist
+- **Common mistakes** — what gets reports closed
+- **Practice targets** — where to find this legally, plus a concrete lab assignment
+- **Key takeaways** — numbered, the durable lessons
+- **What to study next** — a ladder of related classes
+- **Reference index** — every report cited, with URL and bounty
+
+Every lesson header carries `> **Category:**` linking back to its
+[CURRICULUM](CURRICULUM.md) section.
+
+### Maintaining consistency
+
+Two scripts in `../tools/` keep the lessons aligned as they're edited:
+
+| Script | Purpose |
+|---|---|
+| `renumber_sections.py` | Renumber `## N.` headings sequentially after inserting or reordering sections. Skips fenced code blocks. Supports `--check` for a dry run. |
+| `fix_section_refs.py` | Rewrite `Lesson NN §X` cross-references after a renumber, using a per-lesson old→new map. |
+
+**Workflow when restructuring a lesson:** edit the content → `renumber_sections.py` → update the
+map in `fix_section_refs.py` → run it → spot-check that citations still land on the right sections.
 
 ## Rule
 
@@ -52,19 +81,32 @@ Recurring principles that appear in more than one class — the real transferabl
 | **A fix that adds a check isn't a fix** — retest after every remediation | 05, 06 |
 | **Prove the origin/impact, not the reflection** — `alert(document.domain)`, the state change | 05, 06 |
 
-## Suggested order for a new hunter
+## Suggested order
 
-IDOR (01) → GraphQL (02) → OAuth (04) → SSRF (03)
+**The curriculum's order is authoritative** — see [CURRICULUM.md](CURRICULUM.md#suggested-category-order):
+Recon → Access Control → Client-Side → Business Logic → API → Identity → Server-Side Request →
+Injection → File Handling → Caching & Infrastructure.
 
-Reason: IDOR builds the "change one value, observe the delta" reflex. GraphQL is IDOR's most
-lucrative modern surface. OAuth is the highest-paying class and uses the same access-control
-thinking. SSRF last because it needs the most supporting infrastructure knowledge (cloud IAM).
+Within the lessons written so far, if you just want the fastest route to a paying bug class:
+
+**IDOR (01) → XSS (06) → Race Conditions (05) → OAuth (04) → GraphQL (02) → SSRF (03)**
+
+Reason: IDOR and XSS build the "change one value, observe the delta" reflex on the two
+highest-volume classes. Race conditions teach you to think about *intent* and state. OAuth is the
+highest-paying class and reuses the same access-control thinking. GraphQL is IDOR's most lucrative
+modern surface. SSRF last because it needs the most supporting infrastructure knowledge (cloud IAM).
 
 ## Next candidates
 
-- Open redirect (the chain enabler behind lessons 03 and 04)
-- JWT claim tampering + algorithm confusion
-- Business logic / coupon & price manipulation (parent class of lesson 05)
-- Request smuggling (CL.TE / TE.CL, HTTP/2 desync)
-- Cache poisoning
-- Web cache deception
+These map to curriculum categories that don't have a deep lesson yet:
+
+| Candidate | Curriculum category |
+|---|---|
+| SQLi / NoSQLi / SSTI / command injection / XXE | 7. Injection |
+| Cache poisoning (closes the loop on PayPal's $18,900 XSS) | 8. Caching & Infrastructure |
+| Request smuggling (CL.TE / TE.CL, HTTP/2 desync) | 8. Caching & Infrastructure |
+| Host header injection | 8. Caching & Infrastructure |
+| File upload + archive extraction | 9. File Handling |
+| JWT claim tampering + algorithm confusion | 4. Identity & Auth |
+| Open redirect (the chain enabler behind 03 and 04) | 3. Server-Side Request |
+| Subdomain takeover + recon pipeline | 10. Recon & Disclosure |

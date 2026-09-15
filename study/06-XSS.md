@@ -5,6 +5,7 @@
 > ($6,000 each), Shopify #422043/#232174 ($5,000 each), Coinbase #100829 ($5,000)
 > **Format:** writeup → mechanism → raw traffic → bypasses → escalation → practice
 > **Status:** Lesson 6 of the study track
+> **Category:** 6. Client-Side — see [CURRICULUM](CURRICULUM.md#6-client-side)
 
 ---
 
