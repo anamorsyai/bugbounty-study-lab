@@ -23,7 +23,7 @@ for it. Bounty figures are the disclosed amounts.
 | 5 | [Business Logic](#5-business-logic) | [05](05-Race-Conditions.md) | races, price manipulation, workflows |
 | 6 | [Client-Side](#6-client-side) | [06](06-XSS.md) | XSS, CSRF, CORS, postMessage |
 | 7 | [Injection](#7-injection) | — | SQLi, NoSQLi, SSTI, cmdi, XXE |
-| 8 | [Caching & Infrastructure](#8-caching--infrastructure) | — | cache poison, smuggling, host header |
+| 8 | [Caching & Infrastructure](#8-caching--infrastructure) | [07](07-Cache-Poisoning-Deception.md) · [08](08-Request-Smuggling.md) | cache poison, smuggling, host header |
 | 9 | [File Handling](#9-file-handling) | — | upload, traversal, archives |
 | 10 | [Recon & Disclosure](#10-recon--disclosure) | — | subdomains, secrets, cloud storage |
 
@@ -304,36 +304,36 @@ for it. Bounty figures are the disclosed amounts.
 
 | # | Step | Source |
 |---|---|---|
-| 1 | Learn how a cache decides what to store: cache keys and unkeyed inputs | — |
-| 2 | Find the cache: `X-Cache`, `Age`, `CF-Cache-Status`, `X-Served-By` | — |
-| 3 | Learn **web cache poisoning** — inject into an unkeyed input, poison the entry | — |
+| 1 | Learn how a cache decides what to store: cache keys and unkeyed inputs | [Lesson 07 §3](07-Cache-Poisoning-Deception.md) |
+| 2 | Find the cache: `X-Cache`, `Age`, `CF-Cache-Status`, `X-Served-By` | Lesson 07 §3 |
+| 3 | Learn **web cache poisoning** — inject into an unkeyed input, poison the entry | Lesson 07 §1 |
 | 4 | Learn the classic: **unkeyed header** → XSS for every visitor | [PayPal #488147](https://hackerone.com/reports/488147) $18,900 |
-| 5 | Test unkeyed inputs: `X-Forwarded-Host`, `X-Host`, `X-Forwarded-Scheme` | — |
-| 6 | Learn **cache deception** — trick the cache into storing a private page | — |
-| 7 | Test deception with path tricks: `/account/profile.css`, `/profile;.css` | — |
-| 8 | Learn **host header injection** — password-reset poisoning, cache poisoning | — |
-| 9 | Test `X-Forwarded-Host` in password-reset flows | — |
-| 10 | Learn **request smuggling** basics: Content-Length vs Transfer-Encoding | — |
-| 11 | Learn **CL.TE** and **TE.CL** desync | — |
-| 12 | Learn **TE.TE** obfuscation — malformed Transfer-Encoding headers | — |
-| 13 | Learn **HTTP/2 → HTTP/1.1 downgrade** smuggling | — |
-| 14 | Learn **H2.CL / H2.TE** desync | — |
-| 15 | Test smuggling only where authorized — it can break the backend | — |
-| 16 | Learn **response queue poisoning** | — |
-| 17 | Learn **HTTP request tunnelling** | — |
-| 18 | Learn **CL.0** desync | — |
-| 19 | Test **CORS + cache** interaction | — |
-| 20 | Test **CDN-specific** behaviours (Cloudflare, Akamai, Fastly quirks) | — |
-| 21 | Learn **WAF fingerprinting** and per-WAF bypass notes | — |
+| 5 | Test unkeyed inputs: `X-Forwarded-Host`, `X-Host`, `X-Forwarded-Scheme` | Lesson 07 §5 |
+| 6 | Learn **cache deception** — trick the cache into storing a private page | Lesson 07 §4.3 |
+| 7 | Test deception with path tricks: `/account/profile.css`, `/profile;.css` | Lesson 07 §4.3 |
+| 8 | Learn **host header injection** — password-reset poisoning, cache poisoning | Lesson 07 §4.4 |
+| 9 | Test `X-Forwarded-Host` in password-reset flows | Lesson 07 §4.4 |
+| 10 | Learn **request smuggling** basics: Content-Length vs Transfer-Encoding | [Lesson 08 §3](08-Request-Smuggling.md) |
+| 11 | Learn **CL.TE** and **TE.CL** desync | Lesson 08 §4.1–4.2 |
+| 12 | Learn **TE.TE** obfuscation — malformed Transfer-Encoding headers | Lesson 08 §4.3, §6 |
+| 13 | Learn **HTTP/2 → HTTP/1.1 downgrade** smuggling | Lesson 08 §4.4 |
+| 14 | Learn **H2.CL / H2.TE** desync | Lesson 08 §4.4 |
+| 15 | Test smuggling only where authorized — it can break the backend | Lesson 08 §8 |
+| 16 | Learn **response queue poisoning** | Lesson 08 §7 |
+| 17 | Learn **HTTP request tunnelling** | Lesson 08 §12 |
+| 18 | Learn **CL.0** desync | Lesson 08 §3 |
+| 19 | Test **CORS + cache** interaction | Lesson 07 §6 |
+| 20 | Test **CDN-specific** behaviours (Cloudflare, Akamai, Fastly quirks) | Lesson 07 §5, Lesson 08 §6 |
+| 21 | Learn **WAF fingerprinting** and per-WAF bypass notes | Lesson 08 §6 |
 | 22 | Test **rate limiting** at the edge vs origin — find the bypass | — |
-| 23 | Learn **HTTP/2** features that create bugs: multiplexing, pseudo-headers | — |
+| 23 | Learn **HTTP/2** features that create bugs: multiplexing, pseudo-headers | Lesson 08 §3 |
 | 24 | Test **hop-by-hop header** handling | — |
 | 25 | Test **absolute-URI** request lines | — |
 | 26 | Learn **domain fronting / SNI confusion** | — |
 | 27 | Learn **subdomain takeover** mechanics: dangling CNAMEs | — |
 | 28 | Automate takeover checks across all resolved hosts | — |
-| 29 | Learn **DNS rebinding** and its SSRF applications | — |
-| 30 | **Live rep:** poison a cache in a lab so a header change persists for the next visitor | — |
+| 29 | Learn **DNS rebinding** and its SSRF applications | Lesson 03 §9 |
+| 30 | **Live rep:** poison a cache in a lab so a header change persists for the next visitor | Lesson 07 §10 |
 
 ---
 
@@ -358,7 +358,7 @@ for it. Bounty figures are the disclosed amounts.
 | 15 | Test **symlink** entries in archives | — |
 | 16 | Test **import pipelines** for object-ID injection | [GitLab #743953](https://hackerone.com/reports/743953) $20,000 |
 | 17 | Test **filename collision** races in imports | [GitLab #214028](https://hackerone.com/reports/214028) |
-| 18 | Learn **XXE via Office/XML upload** | Lesson 07 §21 |
+| 18 | Learn **XXE via Office/XML upload** | [Injection §21](#7-injection) |
 | 19 | Test **image processing** libraries (ImageMagick, Ghostscript) | — |
 | 20 | Test **PDF generation** for SSRF and local file read | Lesson 03 §3 |
 | 21 | Test **metadata** in uploaded files — EXIF injection | — |

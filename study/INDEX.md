@@ -12,6 +12,8 @@ escalation → practice assignment.
 | 04 | [OAuth Redirect-URI Bypass](04-OAuth-redirect-bypass.md) | OAuth / ATO | Meta $24,000 | **done** |
 | 05 | [Race Conditions](05-Race-Conditions.md) | Concurrency / logic | Stripe $5,000 | **done** |
 | 06 | [XSS → Account Takeover](06-XSS.md) | Client-side | PayPal $20,000 | **done** |
+| 07 | [Web Cache Poisoning & Deception](07-Cache-Poisoning-Deception.md) | Caching | PayPal $18,900 | **done** |
+| 08 | [HTTP Request Smuggling](08-Request-Smuggling.md) | Infrastructure | Basecamp $7,500 | **done** |
 
 **Curriculum:** [`../CURRICULUM.md`](CURRICULUM.md) — 10 categories, **30 steps each**, organized
 for daily learning. Start there for the full path; the lessons below go deep on one class each.
@@ -85,6 +87,10 @@ Recurring principles that appear in more than one class — the real transferabl
 | **The check runs before the state change** — TOCTOU is just access control with a timing window | 01, 05 |
 | **A fix that adds a check isn't a fix** — retest after every remediation | 05, 06 |
 | **Prove the origin/impact, not the reflection** — `alert(document.domain)`, the state change | 05, 06 |
+| **Two parsers, one request** — desync is a parsing disagreement (cache vs origin, CL vs TE) | 03, 07, 08 |
+| **Persistence + cross-client delivery = the finding** — reflection alone proves nothing | 06, 07 |
+| **The security layer is a parser too** — WAFs and CDNs have the bugs (Cloudflare $6,000) | 07, 08 |
+| **Critical ≠ paid** — Slack and Zomato paid $0 for genuine mass ATO | 08 |
 
 ## Suggested order
 
@@ -108,10 +114,13 @@ These map to curriculum categories that don't have a deep lesson yet:
 | Candidate | Curriculum category |
 |---|---|
 | SQLi / NoSQLi / SSTI / command injection / XXE | 7. Injection |
-| Cache poisoning (closes the loop on PayPal's $18,900 XSS) | 8. Caching & Infrastructure |
-| Request smuggling (CL.TE / TE.CL, HTTP/2 desync) | 8. Caching & Infrastructure |
-| Host header injection | 8. Caching & Infrastructure |
 | File upload + archive extraction | 9. File Handling |
 | JWT claim tampering + algorithm confusion | 4. Identity & Auth |
 | Open redirect (the chain enabler behind 03 and 04) | 3. Server-Side Request |
 | Subdomain takeover + recon pipeline | 10. Recon & Disclosure |
+| CSRF + SameSite bypasses | 6. Client-Side |
+| CORS misconfiguration | 6. Client-Side |
+| Prototype pollution / DOM clobbering | 6. Client-Side |
+
+**Done:** 01 IDOR · 02 GraphQL · 03 SSRF · 04 OAuth · 05 Race · 06 XSS · 07 Cache · 08 Smuggling
+— covering curriculum categories 1, 2, 3, 4, 5, 6 and 8.
