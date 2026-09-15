@@ -1,0 +1,14 @@
+# junk
+*.log
+*.tmp
+node_modules/
+__pycache__/
+.DS_Store
+Thumbs.db
+
+# never commit secrets
+.env
+.env.*
+*.pem
+*.key
+credentials*
