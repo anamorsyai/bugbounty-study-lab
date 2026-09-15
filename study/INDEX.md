@@ -10,6 +10,7 @@ escalation → practice assignment.
 | 02 | [GraphQL BOLA & Alias Abuse](02-GraphQL-BOLA.md) | API authz | GitHub $20,000 | **done** |
 | 03 | [SSRF → Cloud Metadata](03-SSRF-cloud-metadata.md) | SSRF / cloud | HackerOne critical | **done** |
 | 04 | [OAuth Redirect-URI Bypass](04-OAuth-redirect-bypass.md) | OAuth / ATO | Meta $24,000 | **done** |
+| 05 | [Race Conditions](05-Race-Conditions.md) | Concurrency / logic | Stripe $5,000 | **done** |
 
 ## Format contract for every lesson
 
@@ -43,6 +44,8 @@ Recurring principles that appear in more than one class — the real transferabl
 | **Indirection defeats allowlists** — open redirect chains, re-resolution after hops | 03, 04 |
 | **Undocumented surface = unaudited surface** — hidden mutations, zombie endpoints | 01, 02 |
 | **The 41st payload** — validation testing is combinatorial; persist | 04 |
+| **The check runs before the state change** — TOCTOU is just access control with a timing window | 01, 05 |
+| **A fix that adds a check isn't a fix** — retest after every remediation | 05 |
 
 ## Suggested order for a new hunter
 
@@ -55,8 +58,8 @@ thinking. SSRF last because it needs the most supporting infrastructure knowledg
 ## Next candidates
 
 - Open redirect (the chain enabler behind lessons 03 and 04)
-- Race conditions / TOCTOU
 - JWT claim tampering + algorithm confusion
-- Business logic / coupon & price manipulation
-- Request smuggling (CL.TE / TE.CL)
+- Business logic / coupon & price manipulation (parent class of lesson 05)
+- Request smuggling (CL.TE / TE.CL, HTTP/2 desync)
 - Cache poisoning
+- Web cache deception
