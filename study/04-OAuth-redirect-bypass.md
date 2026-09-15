@@ -33,7 +33,7 @@ disagreements** — where the server and the browser disagree about what a URL *
 | [#1613430](https://hackerone.com/reports/1613430) | GitLab | Disclosed | OAuth redirect weakness |
 | [#1725190](https://hackerone.com/reports/1725190) | GitLab | Disclosed | OAuth redirect weakness |
 | [CVE-2024-52289](https://securityblog.omegapoint.se/en/writeup-authentik-cve-2024-52289/) | authentik | — | Insecure redirect URI validation → **account takeover** |
-| — | — | — | GitHub App scoped tokens → **$20,000** (see [Lesson 02 §3](02-GraphQL-BOLA.md)) — the token-scope cousin of this class |
+| — | — | — | GitHub App scoped tokens → **$20,000** (see [Lesson 02 §2](02-GraphQL-BOLA.md)) — the token-scope cousin of this class |
 
 **Two properties make OAuth the highest-paying web class:**
 

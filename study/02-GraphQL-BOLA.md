@@ -20,25 +20,7 @@ route — there's a resolver per field. A scanner that crawls URLs sees one endp
 
 ---
 
-## 2. Why GraphQL is a different game
-
-REST spreads its attack surface across dozens of routes you have to *discover*.
-GraphQL funnels everything through **one endpoint** that will **describe itself** if you ask.
-
-Three properties change how you test:
-
-| Property | Why it breaks REST habits |
-|---|---|
-| **Self-describing** | Introspection hands you the full schema — including operations no UI ever calls |
-| **Client-controlled shape** | You choose fields, nesting, and *how many operations* go in one request |
-| **Per-field authorization** | Authz must be re-checked inside **every resolver**. One missed field = a real bug |
-
-That last row is the whole lesson — a scanner that crawls URLs sees one endpoint and moves on.
-The real surface is the schema behind it.
-
----
-
-## 3. Real money from real GraphQL reports
+## 2. Real money from real GraphQL reports
 
 From 65 disclosed HackerOne GraphQL reports — the paid ones:
 
@@ -70,6 +52,24 @@ From 65 disclosed HackerOne GraphQL reports — the paid ones:
 **Pattern to notice:** the highest payouts go to **mutations and token-scope confusion**, not
 to introspection findings. Introspection leaks (many reports) almost always paid **$0** —
 programs treat "you can see the schema" as informational. **Authz and write operations pay.**
+
+---
+
+## 3. Why GraphQL is a different game
+
+REST spreads its attack surface across dozens of routes you have to *discover*.
+GraphQL funnels everything through **one endpoint** that will **describe itself** if you ask.
+
+Three properties change how you test:
+
+| Property | Why it breaks REST habits |
+|---|---|
+| **Self-describing** | Introspection hands you the full schema — including operations no UI ever calls |
+| **Client-controlled shape** | You choose fields, nesting, and *how many operations* go in one request |
+| **Per-field authorization** | Authz must be re-checked inside **every resolver**. One missed field = a real bug |
+
+That last row is the whole lesson — a scanner that crawls URLs sees one endpoint and moves on.
+The real surface is the schema behind it.
 
 ---
 
