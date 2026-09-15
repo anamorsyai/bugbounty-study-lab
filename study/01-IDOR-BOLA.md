@@ -1,8 +1,8 @@
 # Lesson 01 — IDOR / BOLA (Broken Object Level Authorization)
 
 > **Source material:** real HackerOne disclosures + field analysis of 250 disclosed IDOR reports
-> (`thebughunter.blog/case-studies/idor-analysis`, HackerOne reports #3382343, #743953, #1819832,
-> #3154983, #2374730, #1626508, #2122671, #415081, #2207248, #1658418)
+> (`thebughunter.blog/case-studies/idor-analysis`, HackerOne reports [#3382343](https://hackerone.com/reports/3382343), [#743953](https://hackerone.com/reports/743953), [#1819832](https://hackerone.com/reports/1819832),
+> [#3154983](https://hackerone.com/reports/3154983), [#2374730](https://hackerone.com/reports/2374730), [#1626508](https://hackerone.com/reports/1626508), [#2122671](https://hackerone.com/reports/2122671), [#415081](https://hackerone.com/reports/415081), [#2207248](https://hackerone.com/reports/2207248), [#1658418](https://hackerone.com/reports/1658418))
 > **Format:** writeup → mechanism → raw traffic → bypasses → escalation → practice
 > **Status:** Lesson 1 of the study track
 > **Category:** 1. Access Control — see [CURRICULUM](CURRICULUM.md#1-access-control)
@@ -62,7 +62,7 @@ asked *"is user 1235 yours?"* That missing question is the entire bug.
 
 ## 4. Real writeups, dissected
 
-### 3.1 Nextcloud OOO / BOLA — HackerOne #3382343 (Dec 2025)
+### 3.1 Nextcloud OOO / BOLA — HackerOne [#3382343](https://hackerone.com/reports/3382343) (Dec 2025)
 
 **Endpoint:** `/ocs/v2.php/apps/dav/api/v1/outOfOffice/{userId}`
 
@@ -85,7 +85,7 @@ methodology — **read the code, then test the deployed version.**
 
 ---
 
-### 3.2 GitLab project import — HackerOne #743953 — **$20,000**
+### 3.2 GitLab project import — HackerOne [#743953](https://hackerone.com/reports/743953) — **$20,000**
 
 The highest disclosed IDOR. Not an ID in a URL — an ID inside an **import file**.
 
@@ -104,7 +104,7 @@ importer, and the payload is a file, not a parameter, so most scanners never see
 
 ---
 
-### 3.3 Snapchat GraphQL — HackerOne #1819832 — **$15,000**
+### 3.3 Snapchat GraphQL — HackerOne [#1819832](https://hackerone.com/reports/1819832) — **$15,000**
 
 ```graphql
 mutation DeleteStorySnaps(ids: ["VICTIM_SNAP_ID"], storyType: SPOTLIGHT_STORY) { ... }
@@ -121,7 +121,7 @@ GraphQL IDORs grew **140%** for exactly this reason.
 
 ---
 
-### 3.4 Mozilla account deletion — HackerOne #3154983 — **$6,000**
+### 3.4 Mozilla account deletion — HackerOne [#3154983](https://hackerone.com/reports/3154983) — **$6,000**
 
 The most instructive one, because the bug was *invisible* at the request level.
 
@@ -152,11 +152,11 @@ impact they missed, push back with evidence.
 
 | Report | Endpoint | Technique | Impact |
 |---|---|---|---|
-| Bykea #2374730 | `GET /api/v1/bookings/8847?token=abc` → `8848` | sequential increment | victim name, phone, address, trip |
-| DoD #1626508 | `GET /Download.aspx?id=4675` → `4676` | sequential increment | next military document |
-| HackerOne #2122671 | delete certifications | write, no ownership check | **$12,500** — delete all certs |
-| PayPal #415081 | add user to business account | write, no ownership check | **$10,500** |
-| Uber #1145428 | 3-bug chain | chain | arbitrary charges to any business card — **$5,750** |
+| Bykea [#2374730](https://hackerone.com/reports/2374730) | `GET /api/v1/bookings/8847?token=abc` → `8848` | sequential increment | victim name, phone, address, trip |
+| DoD [#1626508](https://hackerone.com/reports/1626508) | `GET /Download.aspx?id=4675` → `4676` | sequential increment | next military document |
+| HackerOne [#2122671](https://hackerone.com/reports/2122671) | delete certifications | write, no ownership check | **$12,500** — delete all certs |
+| PayPal [#415081](https://hackerone.com/reports/415081) | add user to business account | write, no ownership check | **$10,500** |
+| Uber [#1145428](https://hackerone.com/reports/1145428) | 3-bug chain | chain | arbitrary charges to any business card — **$5,750** |
 
 ---
 

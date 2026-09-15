@@ -1,8 +1,8 @@
 # Lesson 06 — XSS (and how it becomes account takeover)
 
 > **Source material:** top disclosed XSS reports from HackerOne (790+ report index), including
-> PayPal #510152 ($20,000) and #488147 ($18,900), Valve #631956 ($9,000), Uber #217739/#256152
-> ($6,000 each), Shopify #422043/#232174 ($5,000 each), Coinbase #100829 ($5,000)
+> PayPal [#510152](https://hackerone.com/reports/510152) ($20,000) and [#488147](https://hackerone.com/reports/488147) ($18,900), Valve [#631956](https://hackerone.com/reports/631956) ($9,000), Uber [#217739](https://hackerone.com/reports/217739)/[#256152](https://hackerone.com/reports/256152)
+> ($6,000 each), Shopify [#422043](https://hackerone.com/reports/422043)/[#232174](https://hackerone.com/reports/232174) ($5,000 each), Coinbase [#100829](https://hackerone.com/reports/100829) ($5,000)
 > **Format:** writeup → mechanism → raw traffic → bypasses → escalation → practice
 > **Status:** Lesson 6 of the study track
 > **Category:** 6. Client-Side — see [CURRICULUM](CURRICULUM.md#6-client-side)
@@ -60,8 +60,8 @@ $250 finding and a $20,000 one.
 
 1. **The biggest XSS payouts are on auth pages.** PayPal's two top findings were both on
    `/signin` — because XSS there steals credentials or session tokens from *every* visitor.
-2. **Fixes get bypassed.** PayPal #510152 is a bypass of #488147. HackerOne #499030 is a bypass
-   of #398054. **When you see a disclosed XSS fix, go read it and try to break the fix.**
+2. **Fixes get bypassed.** PayPal [#510152](https://hackerone.com/reports/510152) is a bypass of [#488147](https://hackerone.com/reports/488147). HackerOne [#499030](https://hackerone.com/reports/499030) is a bypass
+   of [#398054](https://hackerone.com/reports/398054). **When you see a disclosed XSS fix, go read it and try to break the fix.**
 
 ---
 
@@ -172,10 +172,10 @@ listener — the data arrived as an object, not a string, so string-based filter
 ```
 
 **Real escalation examples from the corpus:**
-- **Grammarly #534450, $2,000** — ATO via **cookie manipulation + XSS** combined
-- **Razer #723060, $750** — reflected XSS on a payment page **escalated to ATO**
-- **InnoGames #604120, $1,100** — three-step chain: leak CSRF token → stored XSS → ATO
-- **Valve #631956, $9,000** — XSS → **RCE** via the game client's Kick/Disconnect message
+- **Grammarly [#534450](https://hackerone.com/reports/534450), $2,000** — ATO via **cookie manipulation + XSS** combined
+- **Razer [#723060](https://hackerone.com/reports/723060), $750** — reflected XSS on a payment page **escalated to ATO**
+- **InnoGames [#604120](https://hackerone.com/reports/604120), $1,100** — three-step chain: leak CSRF token → stored XSS → ATO
+- **Valve [#631956](https://hackerone.com/reports/631956), $9,000** — XSS → **RCE** via the game client's Kick/Disconnect message
 
 **The reflex:** when you find XSS, immediately ask *"what can this session do that I can't?"*
 Read the cookie flags. Look for a password/email change form. Check for an OAuth flow on the
@@ -201,11 +201,11 @@ same origin. That question is the difference between $500 and $5,000.
 | CSP `unsafe-inline` absent | DOM clobbering to hijack an existing script |
 
 **Real bypasses in the corpus:**
-- Starbucks **#716761** — WAF bypass via **double-encoded non-standard ASCII** in 404 pages, which
-  was itself a bypass of #629745
-- Twitter **#153666** — "CSP bypass + XSS"
-- Shopify **#299424** — "Bypass filter and get stored XSS" ($3,000)
-- Shopify **#232174** — **whitelist bypass in an SVG icon** ($5,000)
+- Starbucks **[#716761](https://hackerone.com/reports/716761)** — WAF bypass via **double-encoded non-standard ASCII** in 404 pages, which
+  was itself a bypass of [#629745](https://hackerone.com/reports/629745)
+- Twitter **[#153666](https://hackerone.com/reports/153666)** — "CSP bypass + XSS"
+- Shopify **[#299424](https://hackerone.com/reports/299424)** — "Bypass filter and get stored XSS" ($3,000)
+- Shopify **[#232174](https://hackerone.com/reports/232174)** — **whitelist bypass in an SVG icon** ($5,000)
 
 > **A note on SVG:** it appears repeatedly — stored XSS via SVG upload, SVG filter bypasses,
 > SVG icon whitelist bypasses. SVG is XML with script execution. **Always test SVG upload.**
@@ -311,7 +311,7 @@ Steps 3–5 are the ones that turn a $250 XSS into a $5,000 one.
 
 | # | Report | Bounty | Type / technique |
 |---|---|---|---|
-| 1 | [PayPal #510152](https://hackerone.com/reports/510152) | $20,000 | stored XSS on /signin (bypass of #488147) |
+| 1 | [PayPal #510152](https://hackerone.com/reports/510152) | $20,000 | stored XSS on /signin (bypass of [#488147](https://hackerone.com/reports/488147)) |
 | 2 | [PayPal #488147](https://hackerone.com/reports/488147) | $18,900 | stored XSS via **cache poisoning** |
 | 3 | [Valve #631956](https://hackerone.com/reports/631956) | $9,000 | Panorama UI XSS → **RCE** |
 | 4 | [Valve #409850](https://hackerone.com/reports/409850) | $7,500 | Steam React chat client |

@@ -3,7 +3,7 @@
 > **Source material:** `naaaash.github.io/posts/oauth-redirect-bypass.html` (full 1-click ATO
 > writeup), Ahmed Mahmoud's redirect-URI bypass vault, Innocenti et al. *"OAuth 2.0 Redirect URI
 > Validation Falls Short, Literally"* (ACSAC 2023), RFC 9700 (OAuth 2.0 Security BCP, Mar 2025),
-> CVE-2024-52289 (authentik), GitLab HackerOne #1613430 / #1725190, Meta `datr` chain ($24,000)
+> CVE-2024-52289 (authentik), GitLab HackerOne [#1613430](https://hackerone.com/reports/1613430) / [#1725190](https://hackerone.com/reports/1725190), Meta `datr` chain ($24,000)
 > **Format:** writeup → mechanism → raw traffic → bypasses → escalation → practice
 > **Status:** Lesson 4 of the study track
 > **Category:** 4. Identity & Auth — see [CURRICULUM](CURRICULUM.md#4-identity--auth)

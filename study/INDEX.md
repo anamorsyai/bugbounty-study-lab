@@ -55,9 +55,14 @@ Two scripts in `../tools/` keep the lessons aligned as they're edited:
 |---|---|
 | `renumber_sections.py` | Renumber `## N.` headings sequentially after inserting or reordering sections. Skips fenced code blocks. Supports `--check` for a dry run. |
 | `fix_section_refs.py` | Rewrite `Lesson NN §X` cross-references after a renumber, using a per-lesson old→new map. |
+| `link_report_ids.py` | Turn bare `#1234567` report IDs into clickable links to `hackerone.com/reports/…`. Leaves alone IDs already inside links, inline code, and fenced blocks. Supports `--check`. |
 
 **Workflow when restructuring a lesson:** edit the content → `renumber_sections.py` → update the
-map in `fix_section_refs.py` → run it → spot-check that citations still land on the right sections.
+map in `fix_section_refs.py` → run it → `link_report_ids.py` → spot-check that citations still
+land on the right sections.
+
+**Report IDs are always links.** Never leave a bare `#1234567` in a lesson — run
+`link_report_ids.py` before committing.
 
 ## Rule
 

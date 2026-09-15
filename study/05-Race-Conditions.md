@@ -1,7 +1,7 @@
 # Lesson 05 — Race Conditions (limit overrun & TOCTOU)
 
 > **Source material:** 35 disclosed HackerOne race condition reports (TOPRACECONDITION index),
-> Stripe business-logic disclosure #1849626 ($5,000), YesWeHack race condition guide,
+> Stripe business-logic disclosure [#1849626](https://hackerone.com/reports/1849626) ($5,000), YesWeHack race condition guide,
 > James Kettle's *"The single-packet attack"*, PortSwigger Web Security Academy labs
 > **Format:** writeup → mechanism → raw traffic → bypasses → escalation → practice
 > **Status:** Lesson 5 of the study track
@@ -203,11 +203,11 @@ that claim is enforced by a **database constraint** (safe) or an **application-l
 |---|---|---|
 | **Double-spend / financial** | money, credit, or value duplicated | Stripe $5,000; Reverb $1,500 |
 | **Limit bypass** | paid tiers, invite limits, quotas | Shopify $500; Keybase $350 |
-| **State corruption** | inconsistent data, undeletable objects | HackerOne #604534 ($500) |
-| **Authorization bypass** | extra tokens, revoked access still works | IBB #55140 ($2,500) |
-| **Access to others' data** | filename/ID collision across users | GitLab #214028 |
+| **State corruption** | inconsistent data, undeletable objects | HackerOne [#604534](https://hackerone.com/reports/604534) ($500) |
+| **Authorization bypass** | extra tokens, revoked access still works | IBB [#55140](https://hackerone.com/reports/55140) ($2,500) |
+| **Access to others' data** | filename/ID collision across users | GitLab [#214028](https://hackerone.com/reports/214028) |
 | **Privilege escalation** | TOCTOU on a privileged operation | NordVPN #500; Dirty COW |
-| **DoS** | resource exhaustion from concurrent ops | TTS #249319 ($150) |
+| **DoS** | resource exhaustion from concurrent ops | TTS [#249319](https://hackerone.com/reports/249319) ($150) |
 
 **Severity reality:** most web races land **Medium–High** and pay **$100–$2,500**. The Stripe case
 was rated **Medium** despite $600k exposure. **Memory-safety races pay far more** — Flash
@@ -264,7 +264,7 @@ change* is. Screenshot the balance/counter.
   race. ~20 is the sweet spot. Also: that's a DoS risk.
 - **Causing real financial damage.** Use the smallest demonstrable duplication. Prove the
   mechanism, don't drain the system — and never do this outside a program that authorizes it.
-- **Ignoring client-side races.** HackerOne #381356 ($1,250) was a *client-side* race — don't
+- **Ignoring client-side races.** HackerOne [#381356](https://hackerone.com/reports/381356) ($1,250) was a *client-side* race — don't
   assume races only exist server-side.
 - **Forgetting the TOCTOU/privesc flavour.** Local file races (NordVPN $500) are the same class
   with a different payout profile.

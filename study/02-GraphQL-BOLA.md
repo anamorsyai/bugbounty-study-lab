@@ -234,14 +234,14 @@ clairvoyance https://target.tld/graphql -o schema.json -w wordlist.txt
 | **Nested BOLA** | `me { org { members { email } } }` — parent authorized, child not |
 | **Alias flooding** | 1000 aliases of one mutation in a single request |
 | **Batch array** | `[{query},{query},...]` for mass probing |
-| **Negative cost queries** | abuse the cost model to bypass rate limits (Shopify #481518) |
+| **Negative cost queries** | abuse the cost model to bypass rate limits (Shopify [#481518](https://hackerone.com/reports/481518)) |
 | **Token-scope confusion** | a *scoped* token (read-only, or app-scoped) invoking a **write** mutation (GitHub $20k, GitLab CVE-2025-11340) |
 | **Deactivated-user access** | log out / deactivate an account, replay the query (GitLab $1,370) |
-| **Session revocation gap** | revoke session in UI, replay GraphQL (HackerOne #417382, $500) |
+| **Session revocation gap** | revoke session in UI, replay GraphQL (HackerOne [#417382](https://hackerone.com/reports/417382), $500) |
 | **Cross-tenant write** | swap `tenant_id`/`org_id` inside a mutation (TikTok, Stripe) |
 | **GET-based CSRF** | if queries/mutations accept GET or form-POST, cross-site requests trigger them |
 | **Argument injection** | `user(id: "1 OR 1=1")`, Hasura filters `{where:{role:{_eq:"admin"}}}` |
-| **SSRF via resolver** | a URL argument that gets fetched server-side (EXNESS #1864188, $3,000) |
+| **SSRF via resolver** | a URL argument that gets fetched server-side (EXNESS [#1864188](https://hackerone.com/reports/1864188), $3,000) |
 | **DoS (careful!)** | circular nesting `posts{author{posts{author{...}}}}`, directive overloading, field duplication |
 
 **DoS warning:** only test with **explicit permission and agreed limits**. Prove it with a

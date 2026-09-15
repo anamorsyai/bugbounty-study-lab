@@ -1,7 +1,7 @@
 # Lesson 03 — SSRF → Cloud Metadata (the pivot that becomes Critical)
 
-> **Source material:** HackerOne #2262382 (HackerOne's own critical), #508459 (webhooks → AWS
-> private keys), EXNESS #1864188 ($3,000 GraphQL SSRF), `ssrfpayloads.com` IMDS deep-dive,
+> **Source material:** HackerOne [#2262382](https://hackerone.com/reports/2262382) (HackerOne's own critical), [#508459](https://hackerone.com/reports/508459) (webhooks → AWS
+> private keys), EXNESS [#1864188](https://hackerone.com/reports/1864188) ($3,000 GraphQL SSRF), `ssrfpayloads.com` IMDS deep-dive,
 > `blog.cyberxplore.com/ssrf-cloud-metadata-account-takeover`, Resecurity SSRF-to-AWS analysis
 > **Format:** writeup → mechanism → raw traffic → bypasses → escalation → practice
 > **Status:** Lesson 3 of the study track
