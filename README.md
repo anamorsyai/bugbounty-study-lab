@@ -15,9 +15,27 @@ practice rather than case study.
 
 ---
 
-## `study/` — the writeup track
+## `study/` — the curriculum + writeup track
 
-One lesson per bug class. Each follows the same structure so the knowledge compounds:
+**[`study/CURRICULUM.md`](study/CURRICULUM.md)** is the starting point: **10 categories, 30 steps
+each (300 steps)**, organized for daily learning. One step per day, ~30 days per category.
+
+| # | Category | Focus |
+|---|---|---|
+| 1 | Access Control | IDOR, BOLA, BFLA, auth bypass |
+| 2 | API & Protocol | GraphQL, REST, mass assignment |
+| 3 | Server-Side Request | SSRF, path traversal, open redirect |
+| 4 | Identity & Auth | OAuth, JWT, SAML, OTP/2FA |
+| 5 | Business Logic | races, price manipulation, workflows |
+| 6 | Client-Side | XSS, CSRF, CORS, postMessage |
+| 7 | Injection | SQLi, NoSQLi, SSTI, cmdi, XXE |
+| 8 | Caching & Infrastructure | cache poison, smuggling, host header |
+| 9 | File Handling | upload, traversal, archives |
+| 10 | Recon & Disclosure | subdomains, secrets, cloud storage |
+
+### The deep lessons
+
+One lesson per bug class, each following the same structure so the knowledge compounds:
 
 > definition + real payout statistics → canonical raw HTTP traffic → real writeups dissected →
 > where the class actually hides → bypasses → escalation ladder → test methodology →
@@ -30,9 +48,11 @@ One lesson per bug class. Each follows the same structure so the knowledge compo
 | 02 | [GraphQL BOLA & Alias Abuse](study/02-GraphQL-BOLA.md) | API authorization | GitHub — **$20,000** |
 | 03 | [SSRF → Cloud Metadata](study/03-SSRF-cloud-metadata.md) | SSRF / cloud | HackerOne's own platform — **Critical** |
 | 04 | [OAuth Redirect-URI Bypass](study/04-OAuth-redirect-bypass.md) | OAuth / account takeover | Meta — **$24,000** |
+| 05 | [Race Conditions](study/05-Race-Conditions.md) | Concurrency / logic | Stripe — **$5,000** |
+| 06 | [XSS → Account Takeover](study/06-XSS.md) | Client-side | PayPal — **$20,000** |
 
-[`study/INDEX.md`](study/INDEX.md) is the tracker — it also holds the cross-lesson threads
-(the principles that recur across classes) and a suggested study order.
+[`study/INDEX.md`](study/INDEX.md) tracks progress and holds the cross-lesson threads
+(the principles that recur across classes).
 
 ### Suggested order
 

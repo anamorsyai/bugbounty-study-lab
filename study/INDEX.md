@@ -11,6 +11,10 @@ escalation → practice assignment.
 | 03 | [SSRF → Cloud Metadata](03-SSRF-cloud-metadata.md) | SSRF / cloud | HackerOne critical | **done** |
 | 04 | [OAuth Redirect-URI Bypass](04-OAuth-redirect-bypass.md) | OAuth / ATO | Meta $24,000 | **done** |
 | 05 | [Race Conditions](05-Race-Conditions.md) | Concurrency / logic | Stripe $5,000 | **done** |
+| 06 | [XSS → Account Takeover](06-XSS.md) | Client-side | PayPal $20,000 | **done** |
+
+**Curriculum:** [`../CURRICULUM.md`](../CURRICULUM.md) — 10 categories, **30 steps each**, organized
+for daily learning. Start there for the full path; the lessons below go deep on one class each.
 
 ## Format contract for every lesson
 
@@ -45,7 +49,8 @@ Recurring principles that appear in more than one class — the real transferabl
 | **Undocumented surface = unaudited surface** — hidden mutations, zombie endpoints | 01, 02 |
 | **The 41st payload** — validation testing is combinatorial; persist | 04 |
 | **The check runs before the state change** — TOCTOU is just access control with a timing window | 01, 05 |
-| **A fix that adds a check isn't a fix** — retest after every remediation | 05 |
+| **A fix that adds a check isn't a fix** — retest after every remediation | 05, 06 |
+| **Prove the origin/impact, not the reflection** — `alert(document.domain)`, the state change | 05, 06 |
 
 ## Suggested order for a new hunter
 
